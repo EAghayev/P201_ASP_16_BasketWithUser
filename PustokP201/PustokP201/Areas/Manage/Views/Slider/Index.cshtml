@@ -1,0 +1,54 @@
+﻿@model List<Slider>
+@{
+    ViewData["Title"] = "Index";
+    int count = 0;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 style="display:inline-block">Sliders</h1>
+            <a asp-action="create" style="float:right" class="btn btn-primary">Create new</a>
+        </div>
+        <div class="col-lg-12">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Order</th>
+                        <th scope="col">Title1</th>
+                        <th scope="col">Title2</th>
+                        <th scope="col">BtnText</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Slider item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <th scope="row">@count</th>
+                            <td>@item.Order</td>
+                            <td>@item.Title1</td>
+                            <td>@item.Title2</td>
+                            <td>@item.BtnText</td>
+                            <td>
+                                <img width="100" src="~/uploads/sliders/@item.Image" />
+                            </td>
+                            <td>
+                                <a asp-action="edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                                <a asp-action="delete" asp-route-id="@item.Id" class="btn btn-danger delete-btn">Delete</a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+}

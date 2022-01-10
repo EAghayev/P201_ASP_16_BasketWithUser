@@ -1,0 +1,65 @@
+﻿@model List<Book>
+@{
+    ViewData["Title"] = "Index";
+    int count = (ViewBag.SelectedPage-1)*4;
+    int totalPage = ViewBag.TotalPage;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 style="display:inline-block">Books</h1>
+            <a asp-action="create" style="float:right" class="btn btn-primary">Create new</a>
+        </div>
+        <div class="col-lg-12">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Genre</th>
+                        <th scope="col">Cost Price</th>
+                        <th scope="col">Sale Price</th>
+                        <th scope="col">Discount</th>
+                        <th scope="col">Poster</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Book item in Model)
+                    {
+                        count++;
+                    <tr>
+                        <th scope="row">@count</th>
+                        <td>@item.Name</td>
+                        <td>@item.Author.FullName</td>
+                        <td>@item.Genre.Name</td>
+                        <td>@item.CostPrice</td>
+                        <td>@item.SalePrice</td>
+                        <td>@item.DiscountPercent %</td>
+                        <td><img width="100" src="~/uploads/books/@(item.BookImages.FirstOrDefault(x=>x.PosterStatus==true)?.Image)" /></td>
+                        <td>
+                            <a asp-action="comments" asp-route-bookId="@item.Id" class="btn btn-primary">Comments (@item.BookComments.Count())</a>
+                            <a asp-action="edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                            <a asp-action="delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    @for (int i = 1; i <= totalPage; i++)
+                    {
+                        <li class="page-item @(i==ViewBag.SelectedPage?"active":"")"><a class="page-link" asp-action="index" asp-route-page="@i">@i</a></li>
+                    }
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+

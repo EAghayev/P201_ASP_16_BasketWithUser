@@ -1,0 +1,48 @@
+﻿@model List<Genre>
+@{
+    ViewData["Title"] = "Index";
+    int count = 0;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 style="display:inline-block">Genres</h1>
+            <a asp-action="create" style="float:right" class="btn btn-primary">Create new</a>
+        </div>
+        <div class="col-lg-12">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Books Count</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Genre item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <th scope="row">@count</th>
+                            <td>@item.Name</td>
+                            <td>@item.Books.Count()</td>
+                            <td>
+                                <a asp-action="edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                                <a href="" class="btn btn-danger delete-btn">Delete</a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+   
+}
+
